@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> 🌄 𝗣𝗶𝗰𝗸𝗼 𝗪𝗚 𝗴𝗲𝗻𝗲𝗿𝗮𝘁𝗼𝗿 𝗰𝘆𝗯𝗲𝗿𝗽𝘂𝗻𝗸 𝗽𝗮𝗻𝗲𝗹 </title>
+  <!-- Google Fonts: Vazirmatn for Persian, Orbitron for futuristic numbers/titles -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Vazirmatn:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Vazirmatn', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            display: ['Orbitron', 'Vazirmatn', 'sans-serif'],
+          },
+          colors: {
+            cyber: {
+              cyan: '#00e5ff',
+              pink: '#ff00c8',
+              green: '#10b981',
+              dark: '#05070f',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Styling custom scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(10, 15, 28, 0.8);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 229, 255, 0.3);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 229, 255, 0.6);
+    }
+
+    /* Cyber grid overlay */
+    .cyber-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+    }
+
+    /* Glowing animations */
+    @keyframes cyber-pulse {
+      0%, 100% {
+        text-shadow: 0 0 8px rgba(0, 229, 255, 0.6), 0 0 20px rgba(255, 0, 200, 0.4);
+      }
+      50% {
+        text-shadow: 0 0 15px rgba(0, 229, 255, 1), 0 0 30px rgba(255, 0, 200, 0.8);
+      }
+    }
+    .animate-cyber-pulse {
+      animation: cyber-pulse 3s infinite;
+    }
+  </style>
+</head>
+<body class="bg-[#04060c] text-[#e0f7ff] font-sans min-h-screen overflow-x-hidden relative selection:bg-[#ff00c8] selection:text-white">
+
+  <!-- Interactive Starfield Canvas Background -->
+  <canvas id="stars" class="fixed inset-0 pointer-events-none z-0"></canvas>
+  <div class="fixed inset-0 pointer-events-none z-0 cyber-grid"></div>
+  
+  <!-- Glowing neon decorative ambient orbs -->
+  <div class="fixed top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-[#00e5ff]/10 blur-[120px] pointer-events-none z-0"></div>
+  <div class="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-[#ff00c8]/5 blur-[120px] pointer-events-none z-0"></div>
+
+  <!-- Main Container -->
+  <div class="relative z-10 max-w-5xl mx-auto px-4 py-8">
+    
+    <!-- Top Futuristic Header -->
+    <header class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8 pb-6 border-b border-white/5">
+      <div class="flex items-center gap-3">
+        <div class="p-2 bg-black/50 border border-cyan-500/30 rounded-xl shadow-[0_0_15px_rgba(0,229,255,0.15)]">
+          <i data-lucide="zap" class="w-6 h-6 text-[#00e5ff] animate-pulse"></i>
+        </div>
+        <div>
+          <h1 class="text-2xl font-black font-display tracking-wider text-white">
+            PICKO <span class="text-[#00e5ff] animate-cyber-pulse">WG</span>
+          </h1>
+          <p class="text-[10px] text-white/40 tracking-widest uppercase font-mono">Cyberpunk VPN Generator v3.5</p>
+        </div>
+      </div>
+
+      <!-- Live simulated indicators -->
+      <div class="flex items-center gap-3 text-xs font-mono">
+        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+          <span>سرور: برخط [Online]</span>
+        </div>
+        <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400">
+          <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+          <span>رمزنگاری: ChaCha20</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Top Alert Box -->
+    <div class="mb-8 p-4 rounded-xl bg-gradient-to-r from-cyan-950/20 to-pink-950/10 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="relative flex h-3 w-3">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+        </span>
+        <div class="text-right">
+          <h2 class="text-sm font-bold text-white">پنل هوشمند ساخت کانفیگ‌های تصادفی WireGuard</h2>
+          <p class="text-xs text-white/50">محافظت دوگانه با پروتکل‌های چرخشی و دی‌ان‌اس ضد نشت</p>
+        </div>
+      </div>
+      <div class="text-[11px] font-mono text-white/30">
+        SYS_STATUS: <span class="text-emerald-400 font-bold">READY</span>
+      </div>
+    </div>
+
+    <!-- Error message alert -->
+    <div id="error-alert" class="hidden mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <i data-lucide="alert-triangle" class="w-5 h-5 text-rose-400 shrink-0"></i>
+        <p id="error-text" class="text-xs font-semibold"></p>
+      </div>
+      <button onclick="closeError()" class="text-[10px] bg-rose-950/40 border border-rose-500/20 hover:bg-rose-900/40 px-2.5 py-1 rounded">فهمیدم</button>
+    </div>
+
+    <!-- Layout Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Control Panel (Left column on large screen) -->
+      <div class="lg:col-span-5 space-y-6">
+        <div class="p-6 rounded-2xl bg-black/55 border border-white/10 backdrop-blur-md shadow-2xl relative overflow-hidden">
+          
+          <!-- Neon linear stripe top decoration -->
+          <div class="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#00e5ff] to-[#ff00c8]"></div>
+          
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-2">
+              <i data-lucide="sliders" class="w-5 h-5 text-[#00e5ff]"></i>
+              <h3 class="text-base font-bold text-white">تنظیمات تولید کانفیگ</h3>
+            </div>
+            <span class="text-[9px] bg-white/10 text-white/60 px-2 py-0.5 rounded font-mono">WG_GEN_V3</span>
+          </div>
+
+          <!-- Parameter 1: Country Selector -->
+          <div class="space-y-2">
+            <label for="country-select" class="text-xs font-bold text-white/70 flex justify-between">
+              <span>انتخاب کشور و سرور مقصد:</span>
+              <span class="text-[10px] text-cyan-400 font-mono">REQUIRED *</span>
+            </label>
+            <div class="relative">
+              <i data-lucide="globe" class="w-4 h-4 text-white/40 absolute right-3.5 top-3.5"></i>
+              <select id="country-select" class="w-full p-3.5 pr-10 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 text-white text-xs outline-none transition-all focus:ring-2 focus:ring-cyan-500/50 appearance-none">
+                <option value="" class="bg-slate-950 text-white/50">-- لطفاً کشور مورد نظر را انتخاب کنید --</option>
+                
+                <!-- PRO Countries Group -->
+                <optgroup label="⭐ سرورهای ویژه و حرفه‌ای (PRO)">
+                  <option value="5.160|2a00:94c1:abcd" class="bg-slate-900 text-white">🇮🇷 ایران [Iran] 『🅿🆁🅾』</option>
+                  <option value="80.128|2001:608:1a2b" class="bg-slate-900 text-white">🇩🇪 آلمان [Germany] 『🅿🆁🅾』</option>
+                  <option value="3.45|2600:1405:7b9c" class="bg-slate-900 text-white">🇺🇸 آمریکا [United States] 『🅿🆁🅾』</option>
+                  <option value="145.12|2a03:4001:5d6e" class="bg-slate-900 text-white">🇳🇱 هلند [Netherlands] 『🅿🆁🅾』</option>
+                  <option value="39.50|2400:f001:1234" class="bg-slate-900 text-white">🇵🇰 پاکستان [Pakistan] 『🅿🆁🅾』</option>
+                  <option value="94.200|2a02:fd41:beef" class="bg-slate-900 text-white">🇦🇪 امارات [UAE] 『🅿🆁🅾』</option>
+                  <option value="37.224|2a05:3201:cafe" class="bg-slate-900 text-white">🇸🇦 عربستان [Saudi Arabia] 『🅿🆁🅾』</option>
+                  <option value="37.236|2a02:fc01:1b2c" class="bg-slate-900 text-white">🇮🇶 عراق [Iraq] 『🅿🆁🅾』</option>
+                  <option value="37.240|2a02:aa20:abcd" class="bg-slate-900 text-white">🇧🇭 بحرین [Bahrain] 『🅿🆁🅾』</option>
+                  <option value="82.178|2a02:bb30:1234" class="bg-slate-900 text-white">🇴🇲 عمان [Oman] 『🅿🆁🅾』</option>
+                  <option value="41.32|2a02:ee20:5566" class="bg-slate-900 text-white">🇪🇬 مصر [Egypt] 『🅿🆁🅾』</option>
+                  <option value="78.100|2a02:cc30:7788" class="bg-slate-900 text-white">🇶🇦 قطر [Qatar] 『🅿🆁🅾』</option>
+                  <option value="78.160|2a02:ff01:3344" class="bg-slate-900 text-white">🇹🇷 ترکیه [Turkey] 『🅿🆁🅾』</option>
+                  <option value="151.38|2a02:d481:7788" class="bg-slate-900 text-white">🇮🇹 ایتالیا [Italy] 『🅿🆁🅾』</option>
+                  <option value="24.48|2607:f8b1:99aa" class="bg-slate-900 text-white">🇨🇦 کانادا [Canada] 『🅿🆁🅾』</option>
+                  <option value="84.208|2a03:b001:55cc" class="bg-slate-900 text-white">🇳🇴 نروژ [Norway] 『🅿🆁🅾』</option>
+                  <option value="85.224|2a00:c801:77dd" class="bg-slate-900 text-white">🇸🇪 سوئد [Sweden] 『🅿🆁🅾』</option>
+                </optgroup>
+
+                <!-- Regular Countries Group -->
+                <optgroup label="🌍 سرورهای عمومی همگانی (Standard)">
+                  <option value="3.0|2001:4" class="bg-slate-900 text-white">🇺🇸 آمریکا [United States]</option>
+                  <option value="5.56|2001:df0" class="bg-slate-900 text-white">🇩🇪 آلمان [Germany]</option>
+                  <option value="5.48|2a01:e0a" class="bg-slate-900 text-white">🇫🇷 فرانسه [France]</option>
+                  <option value="1.33|2404:7a80" class="bg-slate-900 text-white">🇯🇵 ژاپن [Japan]</option>
+                  <option value="1.224|2406:3000" class="bg-slate-900 text-white">🇰🇷 کرهجنوبی [South Korea]</option>
+                  <option value="51.140|2a00:23c7" class="bg-slate-900 text-white">🇬🇧 بریتانیا [United Kingdom]</option>
+                  <option value="24.114|2607:fea8" class="bg-slate-900 text-white">🇨🇦 کانادا [Canada]</option>
+                  <option value="1.120|2400:7a80" class="bg-slate-900 text-white">🇦🇺 استرالیا [Australia]</option>
+                  <option value="49.32|2405:201" class="bg-slate-900 text-white">🇮🇳 هند [India]</option>
+                  <option value="45.224|2804:14d0" class="bg-slate-900 text-white">🇧🇷 برزیل [Brazil]</option>
+                  <option value="5.160|2a06:5880" class="bg-slate-900 text-white">🇮🇷 ایران [Iran]</option>
+                  <option value="102.135|2403:abcd" class="bg-slate-900 text-white">🇳🇬 نیجریه [Nigeria]</option>
+                  <option value="186.0|2800:800" class="bg-slate-900 text-white">🇲🇽 مکزیک [Mexico]</option>
+                  <option value="2.16|2a02:a00" class="bg-slate-900 text-white">🇮🇹 ایتالیا [Italy]</option>
+                  <option value="37.112|2a02:2f0" class="bg-slate-900 text-white">🇪🇸 اسپانیا [Spain]</option>
+                  <option value="88.228|2a02:ff0" class="bg-slate-900 text-white">🇹🇷 ترکیه [Turkey]</option>
+                  <option value="41.41|2c0f:fc00" class="bg-slate-900 text-white">🇪🇬 مصر [Egypt]</option>
+                  <option value="103.4|2400:adc0" class="bg-slate-900 text-white">🇵🇰 پاکستان [Pakistan]</option>
+                  <option value="89.64|2a02:2788" class="bg-slate-900 text-white">🇵🇱 لهستان [Poland]</option>
+                  <option value="82.76|2a02:2f8" class="bg-slate-900 text-white">🇷🇴 رومانی [Romania]</option>
+                  <option value="91.192|2a00:1e8" class="bg-slate-900 text-white">🇺🇦 اوکراین [Ukraine]</option>
+                  <option value="105.0|2c0f:fe00" class="bg-slate-900 text-white">🇿🇦 آفریقای جنوبی [South Africa]</option>
+                  <option value="112.198|2406:300" class="bg-slate-900 text-white">🇵🇭 فیلیپین [Philippines]</option>
+                  <option value="119.42|2405:4800" class="bg-slate-900 text-white">🇹🇭 تایلند [Thailand]</option>
+                  <option value="171.224|2402:800" class="bg-slate-900 text-white">🇻🇳 ویتنام [Vietnam]</option>
+                  <option value="36.66|2401:2c00" class="bg-slate-900 text-white">🇮🇩 اندونزی [Indonesia]</option>
+                  <option value="175.136|2401:3c00" class="bg-slate-900 text-white">🇲🇾 مالزی [Malaysia]</option>
+                  <option value="91.144|2a03:5c0" class="bg-slate-900 text-white">🇷🇺 روسیه [Russia]</option>
+                  <option value="5.112|2a03:4400" class="bg-slate-900 text-white">🇨🇭 سوئیس [Switzerland]</option>
+                  <option value="213.75|2a00:1ca0" class="bg-slate-900 text-white">🇳🇱 هلند [Netherlands]</option>
+                  <option value="79.136|2a02:168" class="bg-slate-900 text-white">🇸🇪 سوئد [Sweden]</option>
+                  <option value="84.208|2a00:801" class="bg-slate-900 text-white">🇳🇴 نروژ [Norway]</option>
+                  <option value="84.248|2a02:2808" class="bg-slate-900 text-white">🇫🇮 فنلاند [Finland]</option>
+                  <option value="62.197|2a02:168" class="bg-slate-900 text-white">🇨🇿 چک [Czech Republic]</option>
+                  <option value="92.249|2a02:120" class="bg-slate-900 text-white">🇭🇺 مجارستان [Hungary]</option>
+                  <option value="95.34|2a02:586" class="bg-slate-900 text-white">🇬🇷 یونان [Greece]</option>
+                  <option value="91.199|2a02:ed0" class="bg-slate-900 text-white">🇮🇱 اسرائیل [Israel]</option>
+                  <option value="37.151|2a03:6f0" class="bg-slate-900 text-white">🇰🇼 کویت [Kuwait]</option>
+                  <option value="185.1|2a02:30" class="bg-slate-900 text-white">🇶🇦 قطر [Qatar]</option>
+                  <option value="94.200|2a02:5e0" class="bg-slate-900 text-white">🇸🇦 عربستان [Saudi Arabia]</option>
+                  <option value="185.32|2a03:2880" class="bg-slate-900 text-white">🇦🇪 امارات [UAE]</option>
+                  <option value="27.116|2400:7c00" class="bg-slate-900 text-white">🇸🇬 سنگاپور [Singapore]</option>
+                  <option value="188.44|2a0c:980" class="bg-slate-900 text-white">🇱🇧 لبنان [Lebanon]</option>
+                  <option value="31.9|2a02:ccc" class="bg-slate-900 text-white">🇮🇶 عراق [Iraq]</option>
+                  <option value="176.192|2a0a:400" class="bg-slate-900 text-white">🇸🇾 سوریه [Syria]</option>
+                  <option value="212.5|2a02:404" class="bg-slate-900 text-white">🇦🇷 آرژانتین [Argentina]</option>
+                  <option value="190.83|2801:1f0" class="bg-slate-900 text-white">🇨🇴 کلمبیا [Colombia]</option>
+                  <option value="179.60|2801:14" class="bg-slate-900 text-white">🇨🇱 شیلی [Chile]</option>
+                  <option value="95.58|2a09:880" class="bg-slate-900 text-white">🇰🇿 قزاقستان [Kazakhstan]</option>
+                </optgroup>
+              </select>
+              <div class="absolute left-3 top-4 text-[10px] text-white/40 pointer-events-none">▼</div>
+            </div>
+          </div>
+
+          <!-- Parameter 2: DNS Services Selector -->
+          <div class="space-y-2 mt-4">
+            <label for="dns-select" class="text-xs font-bold text-white/70 block flex items-center justify-between">
+              <span>انتخاب سرویس محافظت دی‌ان‌اس (DNS Leak Shield)🛡️:</span>
+              <span class="text-[10px] text-emerald-400 font-mono">ENCRYPTED</span>
+            </label>
+            <div class="relative">
+              <i data-lucide="shield" class="w-4 h-4 text-white/40 absolute right-3.5 top-3.5"></i>
+              <select id="dns-select" class="w-full p-3.5 pr-10 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 text-white text-xs outline-none transition-all focus:ring-2 focus:ring-cyan-500/50 appearance-none">
+                
+                <optgroup label="دی‌ان‌اس شلتر (محافظ اختصاصی ضد فیلتر)">
+                  <option value="78.157.32.202" class="bg-slate-900 text-white">𝑺𝒉𝒆𝒍𝒕𝒆𝒓 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="78.157.32.205" class="bg-slate-900 text-white">𝑺𝒉𝒆𝒍𝒕𝒆𝒓 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                </optgroup>
+
+                <optgroup label="دی‌ان‌اس سرویس‌های ویژه و حرفه‌ای (PRO)">
+                  <option value="8.8.8.8, dns.google, google.com" class="bg-slate-900 text-white">𝑮𝒐𝒐𝒈𝒍𝒆 ᵖʳᵒ ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="8.8.4.4, dns.google, google.com" class="bg-slate-900 text-white">𝑮𝒐𝒐𝒈𝒍𝒆 ᵖʳᵒsᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="1.1.1.1, cloudflare-dns.com, cloudflare.com" class="bg-slate-900 text-white">𝑪𝒍𝒐𝒖𝒅𝒇𝒍𝒂𝒓𝒆 ᵖʳᵒ ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="1.0.0.1, cloudflare-dns.com, cloudflare.com" class="bg-slate-900 text-white">𝑪𝒍𝒐𝒖𝒅𝒇𝒍𝒂𝒓𝒆 ᵖʳᵒ sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="9.9.9.9, dns.quad9.net, quad9.net" class="bg-slate-900 text-white">𝑸𝒖𝒂𝒅9 ᵖʳᵒ ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="149.112.112.112, dns.quad9.net, quad9.net" class="bg-slate-900 text-white">𝑸𝒖𝒂𝒅9ᵖʳᵒsᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="208.67.222.222, doh.opendns.com, opendns.com" class="bg-slate-900 text-white">𝑶𝒑𝒆𝒏 𝑫𝒏𝒔 ᵖʳᵒ ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="208.67.220.220, doh.opendns.com, opendns.com" class="bg-slate-900 text-white">𝑶𝒑𝒆𝒏 𝑫𝒏𝒔 ᵖʳᵒ sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="94.140.14.14, dns.adguard-dns.com, adguard.com" class="bg-slate-900 text-white">𝑨𝒅 𝑮𝒖𝒂𝒓𝒅 ᵖʳᵒᴘʀɪᴍᴀʀʏ</option>
+                  <option value="94.140.15.15, dns.adguard-dns.com, adguard.com" class="bg-slate-900 text-white">𝑨𝒅 𝑮𝒖𝒂𝒓𝒅 ᵖʳᵒ sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="78.157.42.100, electrotm.org" class="bg-slate-900 text-white">𝑬𝒍𝒆𝒄𝒕𝒓𝒐 ᵖʳᵒ ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="78.157.42.101, electrotm.org" class="bg-slate-900 text-white">𝑬𝒍𝒆𝒄𝒕𝒓𝒐 ᵖʳᵒ sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="10.202.10.10, radar.local" class="bg-slate-900 text-white">𝑹𝒂𝒅𝒂𝒓 ᵖʳᵒᴘʀɪᴍᴀʀʏ</option>
+                  <option value="10.202.10.11, radar.local" class="bg-slate-900 text-white">𝑹𝒂𝒅𝒂𝒓 ᵖʳᵒsᴇᴄᴏɴᴅᴀʀʏ</option>
+                </optgroup>
+
+                <optgroup label="سرویس‌های همگانی پایدار">
+                  <option value="114.114.114.114" class="bg-slate-900 text-white">114𝑫𝒏𝒔 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="114.114.115.115" class="bg-slate-900 text-white">114𝑫𝒏𝒔 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="223.5.5.5" class="bg-slate-900 text-white">𝑨𝒍𝒊 𝑫𝒏𝒔 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="223.6.6.6" class="bg-slate-900 text-white">𝑨𝒍𝒊 𝑫𝒏𝒔 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="101.226.4.6" class="bg-slate-900 text-white">𝑫𝒏𝒔 𝑺𝒑𝒂𝒊 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="218.30.118.6" class="bg-slate-900 text-white">𝑫𝒏𝒔 𝑺𝒑𝒂𝒊 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="119.29.29.29" class="bg-slate-900 text-white">𝑫𝒏𝒔𝑷𝒐𝒅 𝒑𝒖𝒃𝒍𝒊𝒄𝑫𝒏𝒔+ ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="119.28.28.28" class="bg-slate-900 text-white">𝑫𝒏𝒔𝑷𝒐𝒅 𝒑𝒖𝒃𝒍𝒊𝒄𝑫𝒏𝒔+ sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="216.146.35.35" class="bg-slate-900 text-white">𝑫𝒚𝒏 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="216.146.36.36" class="bg-slate-900 text-white">𝑫𝒚𝒏 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="156.154.70.1" class="bg-slate-900 text-white">𝑵𝒆𝒖𝒔𝒕𝒂𝒓 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="156.154.71.1" class="bg-slate-900 text-white">𝑵𝒆𝒖𝒔𝒕𝒂𝒓 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="199.85.126.10" class="bg-slate-900 text-white">𝑵𝒐𝒓𝒕𝒐𝒏 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="199.85.127.10" class="bg-slate-900 text-white">𝑵𝒐𝒓𝒕𝒐𝒏 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="8.8.8.8" class="bg-slate-900 text-white">𝑮𝒐𝒐𝒈𝒍𝒆 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="8.8.4.4" class="bg-slate-900 text-white">𝑮𝒐𝒐𝒈𝒍𝒆 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="1.1.1.1" class="bg-slate-900 text-white">𝑪𝒍𝒐𝒖𝒅𝒇𝒍𝒂𝒓𝒆 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="1.0.0.1" class="bg-slate-900 text-white">𝑪𝒍𝒐𝒖𝒅𝒇𝒍𝒂𝒓𝒆 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="9.9.9.9" class="bg-slate-900 text-white">𝑸𝒖𝒂𝒅9 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="149.112.112.112" class="bg-slate-900 text-white">𝑸𝒖𝒂𝒅9 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="208.67.222.222" class="bg-slate-900 text-white">𝑶𝒑𝒆𝒏 𝑫𝒏𝒔 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="208.67.220.220" class="bg-slate-900 text-white">𝑶𝒑𝒆𝒏 𝑫𝒏𝒔 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="94.140.14.14" class="bg-slate-900 text-white">𝑨𝒅 𝑮𝒖𝒂𝒓𝒅 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="94.140.15.15" class="bg-slate-900 text-white">𝑨𝒅 𝑮𝒖𝒂𝒓𝒅 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="78.157.42.100" class="bg-slate-900 text-white">𝑬𝒍𝒆𝒄𝒕𝒓𝒐 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="78.157.42.101" class="bg-slate-900 text-white">𝑬𝒍𝒆𝒄𝒕𝒓𝒐 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="10.202.10.10" class="bg-slate-900 text-white">𝑹𝒂𝒅𝒂𝒓 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="10.202.10.11" class="bg-slate-900 text-white">𝑹𝒂𝒅𝒂𝒓 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="77.88.8.8" class="bg-slate-900 text-white">𝒀𝒂𝒏𝒅𝒆𝒙 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="77.88.8.1" class="bg-slate-900 text-white">𝒀𝒂𝒏𝒅𝒆𝒙 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="84.200.69.80" class="bg-slate-900 text-white">𝑫𝒏𝒔 𝑾𝒂𝒕𝒄𝒉 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="84.200.70.40" class="bg-slate-900 text-white">𝑫𝒏𝒔 𝑾𝒂𝒕𝒄𝒉 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="178.22.122.100" class="bg-slate-900 text-white">𝑺𝒉𝒆𝒄𝒂𝒏 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="185.51.200.2" class="bg-slate-900 text-white">𝑺𝒉𝒆𝒄𝒂𝒏 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="185.55.226.26" class="bg-slate-900 text-white">𝑩𝒆𝒈𝒛𝒂𝒓 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="185.55.225.25" class="bg-slate-900 text-white">𝑩𝒆𝒈𝒛𝒂𝒓 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="209.244.0.3" class="bg-slate-900 text-white">𝑳𝒆𝒗𝒆𝒍3 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="209.244.0.4" class="bg-slate-900 text-white">𝑳𝒆𝒗𝒆𝒍3 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="4.2.2.1" class="bg-slate-900 text-white">𝑳𝒆𝒗𝒆𝒍3 ᴄʟᴀsɪᴄ『1』</option>
+                  <option value="4.2.2.2" class="bg-slate-900 text-white">𝑳𝒆𝒗𝒆𝒍3 ᴄʟᴀsɪᴄ『2』</option>
+                  <option value="4.2.2.3" class="bg-slate-900 text-white">𝑳𝒆𝒗𝒆𝒍3 ᴄʟᴀsɪᴄ『3』</option>
+                  <option value="4.2.2.4" class="bg-slate-900 text-white">𝑳𝒆𝒗𝒆𝒍3 ᴄʟᴀsɪᴄ『4』</option>
+                  <option value="4.2.2.5" class="bg-slate-900 text-white">𝑳𝒆𝒗𝒆𝒍3 ᴄʟᴀsɪᴄ『5』</option>
+                  <option value="4.2.2.6" class="bg-slate-900 text-white">𝑳𝒆𝒗𝒆𝒍3 ᴄʟᴀsɪᴄ『6』</option>
+                  <option value="74.82.42.42" class="bg-slate-900 text-white">𝑯𝒖𝒓𝒓𝒊𝒄𝒂𝒏𝒆 𝑬𝒍𝒆𝒄𝒕𝒓𝒊𝒄 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="66.220.18.42" class="bg-slate-900 text-white">𝑯𝒖𝒓𝒓𝒊𝒄𝒂𝒏𝒆 𝑬𝒍𝒆𝒄𝒕𝒓𝒊𝒄 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                  <option value="103.86.96.100" class="bg-slate-900 text-white">𝑵𝒐𝒓𝒅 𝑫𝒏𝒔 ᴘʀɪᴍᴀʀʏ</option>
+                  <option value="103.86.99.100" class="bg-slate-900 text-white">𝑵𝒐𝒓𝒅 𝑫𝒏𝒔 sᴇᴄᴏɴᴅᴀʀʏ</option>
+                </optgroup>
+              </select>
+              <div class="absolute left-3 top-4 text-[10px] text-white/40 pointer-events-none">▼</div>
+            </div>
+          </div>
+
+          <!-- Parameter 3: Config Name Input -->
+          <div class="space-y-2 mt-4">
+            <label for="confName" class="text-xs font-bold text-white/70 block">نام فایل نهایی کانفیگ:</label>
+            <div class="relative">
+              <i data-lucide="file-code" class="w-4 h-4 text-white/40 absolute right-3.5 top-3.5"></i>
+              <input type="text" id="confName" placeholder="مثال: myvpn" class="w-full p-3 pr-10 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 text-white text-xs outline-none focus:ring-2 focus:ring-cyan-500/50 transition-all">
+            </div>
+          </div>
+
+          <!-- Main Actions -->
+          <div class="mt-8 space-y-3">
+            <button onclick="generateConfig()" class="w-full py-4 rounded-xl bg-gradient-to-r from-[#00e5ff] to-[#ff00c8] hover:opacity-90 active:scale-[0.98] transition-all font-bold text-xs tracking-wider text-white shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2">
+              <i data-lucide="sparkles" class="w-4.5 h-4.5"></i>
+              <span>ایجاد و رندر کانفیگ امن ✨</span>
+            </button>
+
+            <div class="grid grid-cols-2 gap-3">
+              <button onclick="downloadConfig()" class="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-cyan-400 flex items-center justify-center gap-1.5 transition-all">
+                <i data-lucide="download" class="w-4 h-4"></i>
+                <span>دانلود فایل</span>
+              </button>
+              <button onclick="clearConfig()" class="p-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold text-rose-400 flex items-center justify-center gap-1.5 transition-all">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                <span>پاکسازی</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Guide Panel -->
+        <div class="p-5 rounded-xl bg-white/5 border border-white/5 space-y-2.5">
+          <div class="flex items-center gap-1.5 text-white/80 font-bold text-xs">
+            <i data-lucide="info" class="w-4 h-4 text-cyan-400"></i>
+            <span>راهنمای استفاده سریع</span>
+          </div>
+          <p class="text-[11px] text-white/50 leading-relaxed">
+            فایل تولید شده را می‌توانید مستقیماً در نرم‌افزار رسمی WireGuard در سیستم‌عامل‌های اندروید، ویندوز، iOS یا مک ایمپورت کرده و بدون محدودیت متصل شوید.
+          </p>
+        </div>
+      </div>
+
+      <!-- Output Screen (Right column on large screen) -->
+      <div class="lg:col-span-7 space-y-6">
+        <div class="rounded-2xl border border-white/10 bg-[#02050a]/90 backdrop-blur-md shadow-2xl flex flex-col min-h-[480px] relative overflow-hidden">
+          
+          <!-- Terminal Header -->
+          <div class="bg-white/5 px-4 py-3 border-b border-white/10 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <i data-lucide="terminal" class="w-4 h-4 text-cyan-400"></i>
+              <span class="text-xs font-mono font-semibold text-white/70">OUTPUT_TERMINAL</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+              <span class="text-[10px] font-mono text-cyan-400/80">READY</span>
+            </div>
+          </div>
+
+          <!-- Terminal Content Area -->
+          <div class="p-5 flex-1 flex flex-col justify-between">
+            
+            <!-- Output Code block -->
+            <div class="flex-1">
+              <pre id="output" class="text-cyan-400 select-all overflow-x-auto whitespace-pre-wrap bg-black/40 p-4 rounded-xl border border-white/5 text-[11px] font-mono leading-relaxed min-h-[300px] max-h-[380px]">
+[سیستم منتظر انتخاب کشور و فشردن دکمه ایجاد می‌باشد...]</pre>
+            </div>
+
+            <!-- Terminal Actions / Copy button -->
+            <div class="mt-4 pt-4 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div class="flex items-center gap-1.5 text-[10px] text-white/40">
+                <i data-lucide="key" class="w-3.5 h-3.5 text-cyan-400/60"></i>
+                <span>کلیدهای رمزنگاری پیش‌فرض ۲۵۶ بیتی تایید شدند.</span>
+              </div>
+              <button onclick="copyToClipboard()" class="w-full sm:w-auto px-4 py-2.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 text-xs font-bold transition-all flex items-center justify-center gap-1.5">
+                <i data-lucide="copy" class="w-4 h-4"></i>
+                <span id="copy-text">کپی متن کانفیگ</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Terminal Footer status bar -->
+          <div class="bg-black/60 px-4 py-2 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-white/40">
+            <span>نوع کانفیگ: <strong class="text-cyan-400">WG DUAL</strong></span>
+            <span>بلاک امنیتی: <strong class="text-pink-400">AES-GCM</strong></span>
+          </div>
+
+        </div>
+
+        <!-- Success Toast -->
+        <div id="toast" class="hidden fixed bottom-6 left-6 p-4 rounded-xl bg-slate-900 border border-emerald-500/30 shadow-2xl flex items-center gap-3 z-50">
+          <div class="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400">
+            <i data-lucide="check" class="w-5 h-5"></i>
+          </div>
+          <div class="text-right">
+            <h4 class="text-xs font-bold text-white">کپی موفق کانفیگ!</h4>
+            <p class="text-[10px] text-white/50">متن کانفیگ با موفقیت در کلیپ‌بورد سیستم کپی گردید.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Interactive stats grid at the bottom -->
+    <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-center">
+        <span class="text-xs text-white/40 block mb-1">سرعت اتصال متوسط</span>
+        <span class="text-base font-black text-white font-display">1.4 <span class="text-xs text-cyan-400 font-normal">Gbps</span></span>
+      </div>
+      <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-center">
+        <span class="text-xs text-white/40 block mb-1">پروتکل فعال</span>
+        <span class="text-base font-black text-emerald-400 font-display">WireGuard</span>
+      </div>
+      <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-center">
+        <span class="text-xs text-white/40 block mb-1">زمان پاسخگویی</span>
+        <span class="text-base font-black text-white font-display">38 <span class="text-xs text-pink-400 font-normal">ms</span></span>
+      </div>
+      <div class="p-4 rounded-xl bg-white/5 border border-white/5 text-center">
+        <span class="text-xs text-white/40 block mb-1">رمزنگاری داده</span>
+        <span class="text-base font-black text-white font-display">Poly1305</span>
+      </div>
+    </div>
+
+    <!-- Cyber Footer -->
+    <footer class="mt-16 pt-8 border-t border-white/5 text-center text-xs text-white/30 space-y-2">
+      <p class="font-mono">⚡ PICKO WIREGUARD PANEL © 2026 // ALL TUNNEL TRAFFIC ENCRYPTED</p>
+      <p class="text-[10px] text-white/20">طراحی شده با سبک مدرن سایبرپانک و متناسب با پروتکل اتصال متقاطع WireGuard.</p>
+    </footer>
+
+  </div>
+
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    let currentConfig = "";
+
+    function randomInRange(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function generateValidBase64Key() {
+      const array = new Uint8Array(32);
+      crypto.getRandomValues(array);
+      let s = '';
+      for (let i = 0; i < array.length; i++) s += String.fromCharCode(array[i]);
+      return btoa(s);
+    }
+
+    function generateConfig() {
+      const value = document.getElementById("country-select").value;
+      if (!value) {
+        showError("لطفاً کشور مورد نظر را انتخاب کنید.");
+        return;
+      }
+      closeError();
+
+      const [ipv4Prefix, ipv6Prefix] = value.split("|");
+
+      const part1 = Math.floor(Math.random() * 255);
+      const part2 = Math.floor(Math.random() * 255);
+      const part3 = Math.floor(Math.random() * 255);
+      const part4 = Math.floor(Math.random() * 255);
+      const part5 = Math.floor(Math.random() * 255);
+      const part6 = Math.floor(Math.random() * 255);
+      const part11 = Math.floor(Math.random() * 255);
+      
+      const end1 = Math.floor(Math.random() * 255);
+      const end2 = Math.floor(Math.random() * 255);
+
+      const part7 = randomInRange(1000, 9999).toString(16);
+      const part8 = randomInRange(1000, 9999).toString(16);
+      const part9 = randomInRange(1000, 9999).toString(16);
+      const part10 = randomInRange(1000, 9999).toString(16);
+
+      const partad1 = randomInRange(1000, 9999).toString(16);
+      const partad2 = randomInRange(1000, 9999).toString(16);
+      const partad3 = randomInRange(1000, 9999).toString(16);
+      const partad4 = randomInRange(1000, 9999).toString(16);
+      const partad5 = randomInRange(1000, 9999).toString(16);
+      const partad6 = randomInRange(1000, 9999).toString(16);
+      const partad7 = randomInRange(1000, 9999).toString(16);
+      const T1 = partad1 + ":" + partad2 + ":" + partad3 + ":" + partad4 + ":" + partad5 + ":" + partad6 + ":" + partad7;
+
+      const T2 = ipv6Prefix + "::" + part7 + ":" + part8;
+      const dns61 = T2 + ":" + randomInRange(1000, 9999).toString(16) + ":e40a";
+      const dns62 = T2 + ":" + randomInRange(1000, 9999).toString(16) + ":e40a";
+
+      const addressV4 = ipv4Prefix + "." + part1 + "." + part2 + "/27";
+      const addressV6 = "84e0:" + T1 + "/128";
+      
+      const dns41 = ipv4Prefix + "." + part3 + "." + part4;
+      const endpoint = end1 + "." + end2 + "." + part5 + "." + part6;
+      const allowed1 = ipv4Prefix + ".0.0/16";
+      const aloowed2 = ipv6Prefix + "::/64";
+      const mtu = randomInRange(1420, 1440);
+      const port = randomInRange(2087, 2088);
+      const dns4_selected = document.getElementById("dns-select").value;
+      const privateKey = generateValidBase64Key();
+      const publicKey = generateValidBase64Key();
+      const preSharedKey = generateValidBase64Key();
+      const seekV4 = "aQewq.ipvPicko-" + part1 + "-" + part2 + "-" + part3 + "-" + part4 + "-" + part5 + "-" + part6 + ".QcPk";
+      const seekV6 = "pk.Qweg-" + part11 + "-" + part7 + "-" + part8 + "-" + part9 + "-" + part10 + ".cqwQd.Picko";
+
+      currentConfig = "[Interface]\n" +
+"PrivateKey = " + privateKey + "\n" +
+"Address = " + addressV4 + ", " + addressV6 + "\n" +
+"MTU = " + mtu + "\n" +
+"ListenPort = " + port + "\n" +
+"DNS = " + dns4_selected + ", " + dns41 + ", " + dns61 + ", " + dns62 + "\n" +
+"DNS = " + seekV4 + ", " + seekV6 + "\n\n" +
+"[Peer]\n" +
+"PublicKey = " + publicKey + "\n" +
+"PersistentKeepalive = 25\n" +
+"PreSharedKey = " + preSharedKey + "\n" +
+"Endpoint = " + endpoint + ":62050\n" +
+"AllowedIPs = " + allowed1 + ", " + aloowed2 + "\n";
+
+      document.getElementById("output").innerText = currentConfig;
+    }
+
+    function downloadConfig() {
+      if (!currentConfig) {
+        showError("ابتدا کانفیگ بسازید، سپس روی دکمه دانلود کلیک کنید.");
+        return;
+      }
+      let name = document.getElementById("confName").value.trim();
+      if (!name) name = "config";
+      const blob = new Blob([currentConfig], { type: "conf/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = name + ".conf";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function clearConfig() {
+      currentConfig = "";
+      document.getElementById("output").innerText = "[سیستم منتظر انتخاب کشور و فشردن دکمه ایجاد می‌باشد...]";
+      closeError();
+    }
+
+    async function copyToClipboard() {
+      if (!currentConfig) return;
+      try {
+        await navigator.clipboard.writeText(currentConfig);
+        const toast = document.getElementById("toast");
+        toast.classList.remove("hidden");
+        setTimeout(() => toast.classList.add("hidden"), 3000);
+      } catch (err) {
+        console.error("Failed to copy", err);
+      }
+    }
+
+    function showError(msg) {
+      document.getElementById("error-text").innerText = msg;
+      document.getElementById("error-alert").classList.remove("hidden");
+    }
+
+    function closeError() {
+      document.getElementById("error-alert").classList.add("hidden");
+    }
+
+    /* Falling Starfield Particle effect */
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let W, H, stars = [];
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function makeStars() {
+      stars = [];
+      const count = Math.min(120, Math.floor(W / 12));
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          r: Math.random() * 1.5 + 0.5,
+          d: Math.random() * 0.4 + 0.1
+        });
+      }
+    }
+    makeStars();
+
+    function drawStars() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "rgba(0, 229, 255, 0.6)";
+      for (let s of stars) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+        s.y += s.d;
+        if (s.y > H) { s.y = 0; s.x = Math.random() * W; }
+      }
+      requestAnimationFrame(drawStars);
+    }
+    drawStars();
+  </script>
+</body>
+</html>
