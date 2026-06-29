@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>🌌 IP Generator Cyber-Core - Professional Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Vazirmatn:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cyan: #10b981; /* Reassigned to Emerald */
+      --pink: #6366f1; /* Reassigned to Indigo */
+      --bg-dark: #020617;
+      --bg-panel: rgba(15, 23, 42, 0.85);
+      --border: rgba(16, 185, 129, 0.2);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Vazirmatn', 'Orbitron', sans-serif;
+      background: radial-gradient(circle at top left, #0f172a, #020617 80%);
+      color: #f1f5f9;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* Cyber backdrop elements */
+    .bg-layers {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: 
+        radial-gradient(60% 60% at 20% 30%, rgba(16, 185, 129, 0.05), transparent),
+        radial-gradient(40% 40% at 80% 70%, rgba(99, 102, 241, 0.04), transparent);
+    }
+
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-size: 30px 30px;
+      background-image: 
+        linear-gradient(to right, rgba(16, 185, 129, 0.015) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(16, 185, 129, 0.015) 1px, transparent 1px);
+    }
+
+    canvas#stars {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+    }
+
+    /* Primary layout box */
+    .panel {
+      background: var(--bg-panel);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      box-shadow: 0 0 40px rgba(16, 185, 129, 0.08), inset 0 0 20px rgba(16, 185, 129, 0.03);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 580px;
+      padding: 30px;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--cyan), var(--pink));
+    }
+
+    /* Scanning line */
+    .scanline {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 255, 234, 0.15) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+      background-size: 100% 4px, 6px 100%;
+      z-index: 10;
+      pointer-events: none;
+      opacity: 0.15;
+    }
+
+    .title-wrapper {
+      text-align: center;
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      font-family: 'Orbitron', 'Vazirmatn', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--cyan);
+      text-shadow: 0 0 12px var(--cyan);
+      margin: 0 0 5px 0;
+    }
+
+    .subtitle {
+      font-size: 11px;
+      color: rgba(0, 255, 234, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      display: inline-block;
+      border-bottom: 1px solid rgba(0, 255, 234, 0.2);
+      padding-bottom: 4px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: rgba(224, 247, 255, 0.7);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    select {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 255, 234, 0.2);
+      background: rgba(10, 14, 28, 0.9);
+      color: #00ffea;
+      font-size: 14px;
+      outline: none;
+      font-family: 'Vazirmatn', sans-serif;
+      cursor: pointer;
+      box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    select:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px rgba(0, 255, 234, 0.3), inset 0 0 8px rgba(0, 0, 0, 0.5);
+    }
+
+    button.btn-generate {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 800;
+      font-family: 'Vazirmatn', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, #00ffea, #ff00c8);
+      color: #ffffff;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 25px;
+      box-shadow: 0 0 20px rgba(0, 255, 234, 0.3);
+    }
+
+    button.btn-generate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(0, 255, 234, 0.6), 0 0 15px rgba(255, 0, 200, 0.4);
+    }
+
+    button.btn-generate:active {
+      transform: translateY(0);
+    }
+
+    /* Output slots */
+    .slots-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .ip-block {
+      background: rgba(5, 7, 15, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-left: 3px solid var(--cyan);
+      border-radius: 12px;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: border-color 0.3s, transform 0.2s;
+    }
+
+    .ip-block:hover {
+      border-color: rgba(0, 255, 234, 0.4);
+      transform: translateX(-4px);
+    }
+
+    .ip-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .ip-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: rgba(224, 247, 255, 0.5);
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+    }
+
+    .ip-value {
+      font-family: monospace;
+      font-size: 15px;
+      color: var(--cyan);
+      word-break: break-all;
+      margin: 0;
+      text-shadow: 0 0 6px rgba(0, 255, 234, 0.2);
+    }
+
+    .btn-copy {
+      background: rgba(0, 255, 234, 0.1);
+      border: 1px solid rgba(0, 255, 234, 0.3);
+      color: var(--cyan);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Vazirmatn', sans-serif;
+    }
+
+    .btn-copy:hover {
+      background: var(--cyan);
+      color: #05070f;
+      box-shadow: 0 0 12px rgba(0, 255, 234, 0.4);
+    }
+
+    .btn-copy.copied {
+      background: #00ff66;
+      border-color: #00ff66;
+      color: #05070f;
+    }
+
+    .message {
+      text-align: center;
+      font-size: 13px;
+      color: var(--cyan);
+      min-height: 20px;
+      margin-top: 15px;
+      text-shadow: 0 0 8px rgba(0, 255, 234, 0.3);
+    }
+
+    /* Terminal logs inside output */
+    .terminal-console {
+      background: rgba(3, 5, 10, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 11px;
+      color: rgba(0, 255, 234, 0.65);
+      height: 70px;
+      overflow-y: auto;
+      margin-top: 20px;
+      direction: ltr;
+      text-align: left;
+    }
+
+    .log-line {
+      margin-bottom: 4px;
+    }
+    .log-success { color: #00ff66; }
+    .log-warn { color: #ff00c8; }
+
+    /* Footer indicators */
+    .footer-telemetry {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 10px;
+      color: rgba(224, 247, 255, 0.4);
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .status-active {
+      color: #00ff66;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      background: #00ff66;
+      border-radius: 50%;
+      box-shadow: 0 0 6px #00ff66;
+      display: inline-block;
+    }
+
+    /* RTL specific offsets */
+    [dir="rtl"] .ip-block {
+      border-left: none;
+      border-right: 3px solid var(--cyan);
+    }
+
+    [dir="rtl"] .ip-block:hover {
+      transform: translateX(4px);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-layers"></div>
+  <canvas id="stars"></canvas>
+
+  <div class="panel">
+    <div class="scanline"></div>
+    <div class="title-wrapper">
+      <h3>🌌 IP CYBERPUNK CODES</h3>
+      <div class="subtitle">Secure Gateway Panel</div>
+    </div>
+
+    <div class="form-group">
+      <label for="country">اتخاب گره موقعیت مکانی / Node Location</label>
+      <select id="country">
+        <option value="">-- انتخاب گره سرور / Select Node --</option>
+  <option value="5.160|2a00:94c1:abcd">🇮🇷 ایران [Iran]     『🅿🆁🅾』</option>
+  <option value="80.128|2001:608:1a2b">🇩🇪 آلمان [Germany]     『🅿🆁🅾』</option>
+  <option value="3.45|2600:1405:7b9c">🇺🇸 آمریکا [United States]     『🅿🆁🅾』</option>
+  <option value="145.12|2a03:4001:5d6e">🇳🇱 هلند [Netherlands]     『🅿🆁🅾』</option>
+  <option value="39.50|2400:f001:1234">🇵🇰 پاکستان [Pakistan]     『🅿🆁🅾』</option>
+  <option value="94.200|2a02:fd41:beef">🇦🇪 امارات [UAE]     『🅿🆁🅾』</option>
+  <option value="37.224|2a05:3201:cafe">🇸🇦 عربستان [Saudi Arabia]     『🅿🆁🅾』</option>
+  <option value="37.236|2a02:fc01:1b2c">🇮🇶 عراق [Iraq]     『🅿🆁🅾』</option>
+  <option value="37.240|2a02:aa20:abcd">🇧🇭 بحرین [Bahrain]     『🅿🆁🅾』</option>
+  <option value="82.178|2a02:bb30:1234">🇴🇲 عمان [Oman]     『🅿🆁🅾』</option>
+  <option value="41.32|2a02:ee20:5566">🇪🇬 مصر [Egypt]     『🅿🆁🅾』</option>
+  <option value="78.100|2a02:cc30:7788">🇶🇦 قطر [Qatar]     『🅿🆁🅾』</option>
+  <option value="78.160|2a02:ff01:3344">🇹🇷 ترکیه [Turkey]     『🅿🆁🅾』</option>
+  <option value="151.38|2a02:d481:7788">🇮🇹 ایتالیا [Italy]     『🅿🆁🅾』</option>
+  <option value="24.48|2607:f8b1:99aa">🇨🇦 کانادا [Canada]     『🅿🆁🅾』</option>
+  <option value="84.208|2a03:b001:55cc">🇳🇴 نروژ [Norway]</option>
+  <option value="85.224|2a00:c801:77dd">🇸🇪 سوئد [Sweden]     『🅿🆁🅾』</option>
+  <option value="3.0|2001:4">🇺🇸 آمریکا (رایگان) [United States (Free)]</option>
+  <option value="5.56|2001:df0">🇩🇪 آلمان (رایگان) [Germany (Free)]</option>
+  <option value="5.48|2a01:e0a">🇫🇷 فرانسه [France]</option>
+  <option value="1.33|2404:7a80">🇯🇵 ژاپن [Japan]</option>
+  <option value="1.224|2406:3000">🇰🇷 کره جنوبی [South Korea]</option>
+  <option value="51.140|2a00:23c7">🇬🇧 بریتانیا [United Kingdom]</option>
+  <option value="24.114|2607:fea8">🇨🇦 کانادا (رایگان) [Canada (Free)]</option>
+  <option value="1.120|2400:7a80">🇦🇺 استرالیا [Australia]</option>
+  <option value="49.32|2405:201">🇮🇳 هند [India]</option>
+  <option value="45.224|2804:14d0">🇧🇷 برزیل [Brazil]</option>
+  <option value="5.160|2a06:5880">🇮🇷 ایران (رایگان) [Iran (Free)]</option>
+  <option value="102.135|2403:abcd">🇳🇬 نیجریه [Nigeria]</option>
+  <option value="186.0|2800:800">🇲🇽 مکزیک [Mexico]</option>
+  <option value="2.16|2a02:a00">🇮🇹 ایتالیا (رایگان) [Italy (Free)]</option>
+  <option value="37.112|2a02:2f0">🇪🇸 اسپانیا [Spain]</option>
+  <option value="88.228|2a02:ff0">🇹🇷 ترکیه (رایگان) [Turkey (Free)]</option>
+  <option value="41.41|2c0f:fc00">🇪🇬 مصر (رایگان) [Egypt (Free)]</option>
+  <option value="103.4|2400:adc0">🇵🇰 پاکستان (رایگان) [Pakistan (Free)]</option>
+  <option value="89.64|2a02:2788">🇵🇱 لهستان [Poland]</option>
+  <option value="82.76|2a02:2f8">🇷🇴 رومانی [Romania]</option>
+  <option value="91.192|2a00:1e8">🇺🇦 اوکراین [Ukraine]</option>
+  <option value="105.0|2c0f:fe00">🇿🇦 آفریقای جنوبی [South Africa]</option>
+  <option value="112.198|2406:300">🇵🇭 فیلیپین [Philippines]</option>
+  <option value="119.42|2405:4800">🇹🇭 تایلند [Thailand]</option>
+  <option value="171.224|2402:800">🇻🇳 ویتنام [Vietnam]</option>
+  <option value="36.66|2401:2c00">🇮🇩 اندونزی [Indonesia]</option>
+  <option value="175.136|2401:3c00">🇲🇾 مالزی [Malaysia]</option>
+  <option value="91.144|2a03:5c0">🇷🇺 روسیه [Russia]</option>
+  <option value="5.112|2a03:4400">🇨🇭 سوئیس [Switzerland]</option>
+  <option value="213.75|2a00:1ca0">🇳🇱 هلند (رایگان) [Netherlands (Free)]</option>
+  <option value="79.136|2a02:168">🇸🇪 سوئد (رایگان) [Sweden (Free)]</option>
+  <option value="84.208|2a00:801">🇳🇴 نروژ (رایگان) [Norway (Free)]</option>
+  <option value="84.248|2a02:2808">🇫🇮 فنلاند [Finland]</option>
+  <option value="62.197|2a02:168">🇨🇿 جمهوری چک [Czech Republic]</option>
+  <option value="92.249|2a02:120">🇭🇺 مجارستان [Hungary]</option>
+  <option value="95.34|2a02:586">🇬🇷 یونان [Greece]</option>
+  <option value="91.199|2a02:ed0">🇮🇱 اسرائیل [Israel]</option>
+  <option value="37.151|2a03:6f0">🇰🇼 کویت [Kuwait]</option>
+  <option value="185.1|2a02:30">🇶🇦 قطر (رایگان) [Qatar (Free)]</option>
+  <option value="94.200|2a02:5e0">🇸🇦 عربستان (رایگان) [Saudi Arabia (Free)]</option>
+  <option value="185.32|2a03:2880">🇦🇪 امارات (رایگان) [UAE (Free)]</option>
+  <option value="27.116|2400:7c00">🇸🇬 سنگاپور [Singapore]</option>
+  <option value="188.44|2a0c:980">🇱🇧 لبنان [Lebanon]</option>
+  <option value="31.9|2a02:ccc">🇮🇶 عراق (رایگان) [Iraq (Free)]</option>
+  <option value="176.192|2a0a:400">🇸🇾 سوریه [Syria]</option>
+  <option value="212.5|2a02:404">🇦🇷 آرژانتین [Argentina]</option>
+  <option value="190.83|2801:1f0">🇨🇴 کلمبیا [Colombia]</option>
+  <option value="179.60|2801:14">🇨🇱 شیلی [Chile]</option>
+  <option value="95.58|2a09:880">🇰🇿 قزاقستان [Kazakhstan]</option>
+      </select>
+    </div>
+
+    <button class="btn-generate" onclick="generateIPs()">ایجاد آدرس‌های امن / Generate Secure Tunnel</button>
+
+    <div class="slots-container">
+      <div class="ip-block">
+        <div class="ip-info">
+          <span class="ip-label">IPv4 Tunnel Address</span>
+          <p class="ip-value" id="ipv4">---.---.---.---</p>
+        </div>
+        <button class="btn-copy" id="copy-ipv4" onclick="copyToClipboard('ipv4', 'copy-ipv4')">کپی</button>
+      </div>
+
+      <div class="ip-block">
+        <div class="ip-info">
+          <span class="ip-label">IPv6 Segment Alpha</span>
+          <p class="ip-value" id="ipv6_1">----::----:----:----</p>
+        </div>
+        <button class="btn-copy" id="copy-ipv6-1" onclick="copyToClipboard('ipv6_1', 'copy-ipv6-1')">کپی</button>
+      </div>
+
+      <div class="ip-block">
+        <div class="ip-info">
+          <span class="ip-label">IPv6 Segment Beta</span>
+          <p class="ip-value" id="ipv6_2">----::----:----:----</p>
+        </div>
+        <button class="btn-copy" id="copy-ipv6-2" onclick="copyToClipboard('ipv6_2', 'copy-ipv6-2')">کپی</button>
+      </div>
+    </div>
+
+    <div id="message" class="message">آماده به کار</div>
+
+    <div class="terminal-console" id="console">
+      <div class="log-line">> System terminal ready. Select country to initialize proxy logs...</div>
+    </div>
+
+    <div class="footer-telemetry">
+      <div class="status-active"><span class="dot"></span> SECURE GATEWAY ONLINE</div>
+      <div>CORE TEMPERATURE: 39°C</div>
+    </div>
+  </div>
+
+  <script>
+    function hex() {
+      return Math.floor(Math.random() * 0xffff).toString(16).padStart(4, '0');
+    }
+
+    function randomOctet() {
+      return Math.floor(Math.random() * 254) + 1;
+    }
+
+    function logToConsole(text, type = 'info') {
+      const consoleBox = document.getElementById('console');
+      const line = document.createElement('div');
+      line.className = 'log-line';
+      if (type === 'success') line.className += ' log-success';
+      if (type === 'warn') line.className += ' log-warn';
+      
+      const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+      line.textContent = `[${time}] ${text}`;
+      consoleBox.appendChild(line);
+      consoleBox.scrollTop = consoleBox.scrollHeight;
+    }
+
+    function generateIPs() {
+      const select = document.getElementById('country');
+      const val = select.value;
+      const message = document.getElementById('message');
+      message.textContent = '';
+
+      if (!val) {
+        message.style.color = '#ff00c8';
+        message.textContent = 'لطفاً ابتدا کشور را انتخاب کنید!';
+        logToConsole('Connection aborted: Node location unspecified.', 'warn');
+        return;
+      }
+
+      const selectedText = select.options[select.selectedIndex].text;
+      logToConsole(`Routing request to: ${selectedText}...`);
+
+      const [ipv4Prefix, ipv6Prefix] = val.split('|');
+
+      const ipv4 = `${ipv4Prefix}.${randomOctet()}.${randomOctet()}`;
+      const t2 = `${ipv6Prefix}::${hex()}`;
+      const ipv6_1 = `${t2}:${hex()}:c`;
+      const ipv6_2 = `${t2}:${hex()}:b`;
+
+      document.getElementById('ipv4').textContent = ipv4;
+      document.getElementById('ipv6_1').textContent = ipv6_1;
+      document.getElementById('ipv6_2').textContent = ipv6_2;
+
+      message.style.color = '#00ffea';
+      message.textContent = '⚡ فرکانس همگام شد - تونل برقرار شد ⚡';
+      logToConsole(`Handshake validated with proxy node.`, 'success');
+      logToConsole(`IP assigned: ${ipv4}`, 'success');
+    }
+
+    function copyToClipboard(id, btnId) {
+      const text = document.getElementById(id).textContent;
+      if (text.includes('---') || text.includes('::----')) {
+        return;
+      }
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+
+      const message = document.getElementById('message');
+      message.style.color = '#00ffea';
+      message.textContent = `✅ آدرس کپی شد: ${text}`;
+      logToConsole(`Clipboard hook: ${text} exported.`, 'success');
+
+      const btn = document.getElementById(btnId);
+      const originalText = btn.textContent;
+      btn.textContent = 'کپی شد!';
+      btn.className += ' copied';
+
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.className = 'btn-copy';
+      }, 1500);
+    }
+
+    // Stars particle effect logic
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let W, H, stars = [];
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function makeStars() {
+      stars = [];
+      for (let i = 0; i < 100; i++) {
+        stars.push({
+          x: Math.random() * W,
+          y: Math.random() * H,
+          r: Math.random() * 1.5 + 0.4,
+          d: Math.random() * 0.4 + 0.1
+        });
+      }
+    }
+    makeStars();
+
+    function drawStars() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = "rgba(0, 255, 234, 0.5)";
+      for (let s of stars) {
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fill();
+        s.y += s.d;
+        if (s.y > H) { 
+          s.y = 0; 
+          s.x = Math.random() * W; 
+        }
+      }
+      requestAnimationFrame(drawStars);
+    }
+    drawStars();
+  </script>
+</body>
+</html>
